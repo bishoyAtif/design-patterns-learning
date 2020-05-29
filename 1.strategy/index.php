@@ -2,23 +2,17 @@
 
 require "vendor/autoload.php";
 
-use App\RubberDuck;
-use App\MuscovyDuck;
-use App\FlyBehaviours\CannotFly;
-use App\FlyBehaviours\FlyWithWings;
+use App\Navigator;
+use App\RouteCalculators\WalkingRouteCalculator;
+use App\RouteCalculators\CarRouteCalculator;
 
-$rubberDuck = new RubberDuck(new CannotFly);
-$muscovyDuck = new MuscovyDuck(new FlyWithWings);
+$navigator = new Navigator(new WalkingRouteCalculator);
 
-echo "- Can rubber duck fly?\n# ";
-$rubberDuck->fly();
+echo "Walking Time : ";
+echo $navigator->getRouteTime(1, 10);
 echo "\n";
 
-echo "- Can muscovy duck fly?\n# ";
-$muscovyDuck->fly();
+$navigator->setRouteCalculator(new CarRouteCalculator);
+echo "Car Time : ";
+echo $navigator->getRouteTime(1, 10);
 echo "\n";
-
-echo "Tying our muscovy duck ... \n\n";
-$muscovyDuck->setFlyingBehaviour(new CannotFly);
-echo "- Can it fly now ?\n# ";
-$muscovyDuck->fly();
